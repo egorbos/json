@@ -32,52 +32,52 @@ class JSONTests: XCTestCase {
     }
 
     func testInitJsonWithData() throws {
-        let data: Data = "{ \"name\" : \"Mike\" }".data(using: .utf8)!
-        let json: JSON = JSON(data)
+        let data = "{ \"name\" : \"Mike\" }".data(using: .utf8)!
+        let json = JSON(data)
         XCTAssertEqual(json.type, .dictionary)
         XCTAssertEqual(json["name"].string, "Mike")
     }
 
     func testInitJsonWithBadData() throws {
-        let data: Data = "{{{{ \"name\" : \"Mike\" }".data(using: .utf8)!
-        let json: JSON = JSON(data)
+        let data = "{{{{ \"name\" : \"Mike\" }".data(using: .utf8)!
+        let json = JSON(data)
         XCTAssertEqual(json.type, .null)
         XCTAssertNil(json["name"].string)
         XCTAssertNil(json[0].string)
     }
 
     func testInitJsonWithJsonObject() throws {
-        let data: Data = "{ \"name\" : \"Michael\" }".data(using: .utf8)!
-        let jsonObject: Any = JSON(data).value
-        let json: JSON = JSON(jsonObject)
+        let data = "{ \"name\" : \"Michael\" }".data(using: .utf8)!
+        let jsonObject = JSON(data).value
+        let json = JSON(jsonObject)
         XCTAssertEqual(json.type, .dictionary)
         XCTAssertEqual(json["name"].string, "Michael")
     }
 
     func testInitJsonWithJsonArray() throws {
-        let oneData: Data = "{ \"name\" : \"Ann\" }".data(using: .utf8)!
-        let twoData: Data = "{ \"name\" : \"John\" }".data(using: .utf8)!
-        let jsonOne: JSON = JSON(oneData)
-        let jsonTwo: JSON = JSON(twoData)
-        let testJson: JSON = JSON([jsonOne, jsonTwo])
+        let oneData = "{ \"name\" : \"Ann\" }".data(using: .utf8)!
+        let twoData = "{ \"name\" : \"John\" }".data(using: .utf8)!
+        let jsonOne = JSON(oneData)
+        let jsonTwo = JSON(twoData)
+        let testJson = JSON([jsonOne, jsonTwo])
         XCTAssertEqual(testJson.type, .array)
         XCTAssertEqual(testJson[0]["name"].string, "Ann")
         XCTAssertEqual(testJson[1]["name"].string, "John")
     }
 
     func testInitJsonWithJsonDictionary() throws {
-        let data: Data = "{ \"name\" : \"Jake\" }".data(using: .utf8)!
-        let json: JSON = JSON(data)
-        let testJson: JSON = JSON(["test": json])
+        let data = "{ \"name\" : \"Jake\" }".data(using: .utf8)!
+        let json = JSON(data)
+        let testJson = JSON(["test": json])
         XCTAssertEqual(testJson.type, .dictionary)
         XCTAssertEqual(testJson["test"]["name"].string, "Jake")
     }
 
     func testJsonTypes() throws {
-        let object: String = "{ \"child\" : { \"name\" : \"Ann\", \"age\" : 5, \"student\" : false, \"temp\" : 36.6, \"friends\" : [\"Mike\", \"Frank\"] } }"
-        let data: Data = object.data(using: .utf8)!
+        let object = "{ \"child\" : { \"name\" : \"Ann\", \"age\" : 5, \"student\" : false, \"temp\" : 36.6, \"friends\" : [\"Mike\", \"Frank\"] } }"
+        let data = object.data(using: .utf8)!
 
-        let json: JSON = JSON(data)
+        let json = JSON(data)
 
         XCTAssertEqual(json["child"].type, .dictionary)
         XCTAssertEqual(json["child"].dictionary?["name"] as? String, "Ann")
@@ -100,8 +100,8 @@ class JSONTests: XCTestCase {
     }
 
     func testJsonSubscripts() throws {
-        let data: Data = "{ \"names\" : [\"Mike\", \"Frank\"] }".data(using: .utf8)!
-        let json: JSON = JSON(data)
+        let data = "{ \"names\" : [\"Mike\", \"Frank\"] }".data(using: .utf8)!
+        let json = JSON(data)
         XCTAssertEqual(json["names"].type, .array)
         XCTAssertEqual(json["names"][0].string, "Mike")
         XCTAssertEqual(json["names"][1].string, "Frank")
@@ -116,11 +116,11 @@ class JSONTests: XCTestCase {
     }
 
     func testJsonRepresentable() throws {
-        let jsonString: String = "{\"child\":{\"name\":\"Ann\",\"age\":5,\"student\":false,\"temp\":36.6,\"friends\":[\"Mike\",\"Frank\"]}}"
+        let jsonString = "{\"child\":{\"name\":\"Ann\",\"age\":5,\"student\":false,\"temp\":36.6,\"friends\":[\"Mike\",\"Frank\"]}}"
 
         let test = ["child": Child()]
 
-        guard let json: String = test.jsonString() else {
+        guard let json = test.jsonString() else {
             XCTFail()
             return
         }
